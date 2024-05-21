@@ -10,9 +10,7 @@ _start:
     mov r14, len
 
 for:
-    
-
-
+    mov rax,   [numbers + 5 - r14]
     dec r14
     cmp r14, 0
     jnz for
