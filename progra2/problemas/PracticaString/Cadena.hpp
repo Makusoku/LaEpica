@@ -21,7 +21,7 @@ public:
     // Destructor
     ~Cadena();
 
-    void eleminarDato ();
+    void eliminarDato ();
 
     void inicializarCadena ();
 

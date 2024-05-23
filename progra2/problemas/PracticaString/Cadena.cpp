@@ -35,10 +35,10 @@ Cadena::Cadena(const Cadena &obj) {
 }
 
 Cadena::~Cadena() {
-    eleminarDato();
+    eliminarDato();
 }
 
-void Cadena::eleminarDato() {
+void Cadena::eliminarDato() {
     if (dato != nullptr) delete dato;
 }
 
@@ -80,7 +80,7 @@ void Cadena::assign(const char *nombre) {
         char *a = new char [nCap]{};
         strcpy(a, nombre);
         setCapacidad(nCap);
-        eleminarDato();
+        eliminarDato();
         setDato(a);
     }
     else strcpy (dato, nombre);
@@ -96,7 +96,7 @@ void Cadena::assign (const Cadena &obj) {
         char *a = new char [nCap]{};
         strcpy(a, n);
         setCapacidad(nCap);
-        eleminarDato();
+        eliminarDato();
         setDato(a);
     }
     else strcpy(dato, n);
@@ -110,7 +110,7 @@ void Cadena::operator = (const char *nombre) {
         char *a = new char [nCap]{};
         strcpy(a, nombre);
         setCapacidad(nCap);
-        eleminarDato();
+        eliminarDato();
         setDato(a);
     }
     else strcpy (dato, nombre);
@@ -126,7 +126,7 @@ void Cadena::operator = (const Cadena &obj) {
         char *a = new char [nCap]{};
         strcpy(a, n);
         setCapacidad(nCap);
-        eleminarDato();
+        eliminarDato();
         setDato(a);
     }
     else strcpy(dato, n);
@@ -141,7 +141,7 @@ void Cadena::append(const char *nombre) {
         strcpy(a, dato);
         strcat(a, nombre);
         setCapacidad(nCap);
-        eleminarDato();
+        eliminarDato();
         setDato(a);
     }
     else strcat(dato, nombre);
@@ -158,7 +158,7 @@ void Cadena::append (const Cadena &obj) {
         strcpy(a, dato);
         strcat(a, n);
         setCapacidad(nCap);
-        eleminarDato();
+        eliminarDato();
         setDato(a);
     }
     else strcat(dato, n);
