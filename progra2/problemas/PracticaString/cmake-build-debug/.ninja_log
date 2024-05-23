@@ -1,0 +1,20 @@
+# ninja log v5
+1	241	1716429731266712060	CMakeFiles/PracticaString.dir/main.cpp.o	67e36973c1b793a0
+241	281	1716429731305711816	PracticaString	1e30c6a7b892df5a
+1	261	1716429723458761076	CMakeFiles/PracticaString.dir/Cadena.cpp.o	edf56523da04c683
+1	266	1716429769781470199	CMakeFiles/PracticaString.dir/Cadena.cpp.o	edf56523da04c683
+266	307	1716429769821469948	PracticaString	1e30c6a7b892df5a
+1	266	1716429785343372451	CMakeFiles/PracticaString.dir/Cadena.cpp.o	edf56523da04c683
+267	307	1716429785382372206	PracticaString	1e30c6a7b892df5a
+1	264	1716429793617320467	CMakeFiles/PracticaString.dir/Cadena.cpp.o	edf56523da04c683
+264	304	1716429793656320222	PracticaString	1e30c6a7b892df5a
+1	261	1716429838174040429	CMakeFiles/PracticaString.dir/Cadena.cpp.o	edf56523da04c683
+261	301	1716429838212040189	PracticaString	1e30c6a7b892df5a
+1	263	1716430110487326082	CMakeFiles/PracticaString.dir/Cadena.cpp.o	edf56523da04c683
+263	302	1716430110525325843	PracticaString	1e30c6a7b892df5a
+1	260	1716430161501004508	CMakeFiles/PracticaString.dir/Cadena.cpp.o	edf56523da04c683
+260	301	1716430161540004263	PracticaString	1e30c6a7b892df5a
+1	292	1716430180863882405	CMakeFiles/PracticaString.dir/Cadena.cpp.o	edf56523da04c683
+292	335	1716430180934881958	PracticaString	1e30c6a7b892df5a
+2	266	1716430194286797756	CMakeFiles/PracticaString.dir/Cadena.cpp.o	edf56523da04c683
+266	309	1716430194327797497	PracticaString	1e30c6a7b892df5a

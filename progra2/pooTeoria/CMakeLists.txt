@@ -3,4 +3,8 @@ project(pooTeoria)
 
 set(CMAKE_CXX_STANDARD 17)
 
-add_executable(pooTeoria main.cpp)
+add_executable(pooTeoria main.cpp
+        ClaseRectangulo.cpp
+        ClaseRectangulo.hpp
+        CLrect.cpp
+        CLrect.hpp)
