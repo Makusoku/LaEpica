@@ -53,8 +53,10 @@ void Cadena::getDato(char *n) const {
     else strcpy (n, dato);
 }
 
-void Cadena::setDato(char *dato) {
-    this->dato = dato;
+void Cadena::setDato(const char *dato) {
+    if (this->dato != nullptr) delete this->dato;
+    this->dato = new char [strlen(dato) + 1]{};
+    strcpy (this->dato, dato);
 }
 
 int Cadena::getLongitud() const {

@@ -27,7 +27,7 @@ public:
 
     void getDato(char *) const;
 
-    void setDato(char *dato);
+    void setDato(const char *dato);
 
     int getLongitud() const;
 
