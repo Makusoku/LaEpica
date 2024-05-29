@@ -1,6 +1,7 @@
 ; Declaracion de dato sin valor
 section .bss
-    buff    resb    100        
+    buff    resb    100000000        
+    arr     resq    1000
 
 section .text
     global _start
@@ -11,7 +12,7 @@ _start:
     xor     rax,    rax
     xor     rdi,    rdi
     mov     rsi,    buff        ; Se guarda en rsi 
-    mov     rdx,    100
+    mov     rdx,    100000000
     syscall
 
     ; Leer el dato, el numero esta en rcx, si hay mas numeros, solo llama a atoi cuantas veces numeros halla y se guardaran en rdx
@@ -20,15 +21,27 @@ _start:
     mov     rcx,    rdx             
 
 
+
     ; AQUI ESCRIBE TU CODIGO
 
 
 
 
+    
+
+
+_end:     
+    ; Fin del programa
+    mov     rax,    60
+    xor     rdi,    rdi
+    syscall
+
+
 _print: 
     push    rcx
+    push    rsi
     ; Transformar rcx en cadena
-    mov     rdi,    buff + 99       ; Vamos a sobreescribir buff, empezando del final
+    mov     rdi,    buff + 99999999       ; Vamos a sobreescribir buff, empezando del final
     mov     rsi,    rdi             ; rsi esta en el final de la cadena
     std                             ; Esto afecta a stosb, ahora disminuye rdi
     mov     rax,    10              ; Final de linea ('\n', cambialo segun te convenga)
@@ -44,15 +57,10 @@ _print:
     mov     rax,    1               
     mov     rdi,    rax
     syscall
+    pop     rsi
     pop     rcx 
+    ret
 
-
-
-fin:     
-    ; Fin del programa
-    mov     rax,    60
-    xor     rdi,    rdi
-    syscall
 
 ; Cadena a numero (Resultado en rdx)
 atoi:   
@@ -84,6 +92,7 @@ atoi:
 
 ; Pasar numero a cadena (el numero esta en rax, inicio de la cadena en rdi, final en rsi)
 itoa:   
+    push    r9
     std                             ; rdi retrocede (tiene efecto en todo el programa)
     mov     r9,     10               
     bt      rax,    63              ; Comprueba si el bit mas siginicativo es 1
@@ -108,6 +117,7 @@ itoa:
 .p:     
     cld                             ; Cancelamos std
     inc     rdi                     ; Aumentamos en 1 para que rdi apunte al inicio de la cadena
+    pop     r9
     ret
 
 
@@ -127,5 +137,42 @@ n_cifras_cadena:
     inc     rdx
     jmp     .lp                     ; Repites el bucle
 
-.end:  
+.end: 
     ret
+
+; El bubble sort de un arreglo (RCX -> Posicion de memoria del ultimo elemento, arr -> Inicio del arreglo)
+bubble_sort:
+    push    rcx
+    push    r15
+    push    r14
+    push    r11
+    push    r8
+    loop_2:
+        cmp     rcx,    arr
+        je      end_loop_2            
+        mov     r15,    arr
+
+        loop_3:
+            cmp     r15,    rcx
+            je      end_loop_3   
+            mov     r14,    r15  
+            add     r15,    r10  
+            mov     r11,    [r15]
+            mov     r8,     [r14]
+            cmp     r11,    r8 
+            jge      loop_3
+            mov     [r14],  r11
+            mov     [r15],  r8
+            jmp     loop_3
+        
+        end_loop_3:
+            sub     rcx,    r10    
+            jmp     loop_2
+
+    end_loop_2:
+        pop     r8
+        pop     r11
+        pop     r14
+        pop     r15 
+        pop     rcx
+        ret
