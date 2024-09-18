@@ -1,0 +1,14 @@
+//
+// Created by marcos on 6/14/24.
+//
+
+#ifndef PRACTICANDOLAB_PEDIDOEVENTUAL_HPP
+#define PRACTICANDOLAB_PEDIDOEVENTUAL_HPP
+
+
+class PedidoEventual {
+
+};
+
+
+#endif //PRACTICANDOLAB_PEDIDOEVENTUAL_HPP
