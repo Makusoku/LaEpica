@@ -1,0 +1,1 @@
+systemd(1)---systemd(2181)---gnome-terminal-(3906)---bash(3922)---mypid(6826)---mypid(6827)---sh(6828)---pstree(6829)
