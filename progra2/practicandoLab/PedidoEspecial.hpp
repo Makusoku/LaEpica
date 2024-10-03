@@ -5,9 +5,24 @@
 #ifndef PRACTICANDOLAB_PEDIDOESPECIAL_HPP
 #define PRACTICANDOLAB_PEDIDOESPECIAL_HPP
 
+#include "Pedido.hpp"
+using namespace std;
 
-class PedidoEspecial {
+class PedidoEspecial : public Pedido {
+private:
+    double descuento;
+public:
+    PedidoEspecial();
 
+    ~PedidoEspecial() override;
+
+    double getDescuento() const;
+
+    void setDescuento(double descuento);
+
+    void lee (ifstream &arch);
+
+    void imprime ();
 };
 
 

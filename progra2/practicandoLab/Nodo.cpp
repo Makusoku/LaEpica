@@ -3,3 +3,8 @@
 //
 
 #include "Nodo.hpp"
+
+Nodo::Nodo() {
+    sig = nullptr;
+    ant = nullptr;
+}

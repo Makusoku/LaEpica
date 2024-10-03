@@ -5,9 +5,21 @@
 #ifndef PRACTICANDOLAB_PROMOCIONES_HPP
 #define PRACTICANDOLAB_PROMOCIONES_HPP
 
+#include "Lista.hpp"
+#include "utils.hpp"
+using namespace std;
 
 class Promociones {
+private:
+    class Lista Lpedidos;
+public:
+    Promociones();
 
+    virtual ~Promociones();
+
+    // Solucion
+    void leepedidos ();
+    void imprimepedidos ();
 };
 
 

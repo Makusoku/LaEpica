@@ -1,0 +1,7 @@
+# ninja log v6
+1	335	1718686159804356353	CMakeFiles/prac1.dir/Libro.cpp.o	5b249fae37e8efa3
+1	315	1718686428443842605	CMakeFiles/prac1.dir/Estante.cpp.o	8f5b812947c6c158
+1	301	1718686212992052220	CMakeFiles/prac1.dir/Espacio.cpp.o	88ca90024b84faa2
+1	296	1718686428443842605	CMakeFiles/prac1.dir/Biblioteca.cpp.o	68e28c707a630017
+297	337	1718686437697791322	prac1	24e31e3bfa0a84ab
+1	297	1718686437401792962	CMakeFiles/prac1.dir/main.cpp.o	3054d3a8050861d9

@@ -3,3 +3,9 @@
 //
 
 #include "Nodo.hpp"
+using namespace std;
+
+Nodo::Nodo() {
+    plibro = nullptr;
+    sig = nullptr;
+}
