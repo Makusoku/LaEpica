@@ -300,6 +300,137 @@ void *xmalloc_best_fit(size_t nbytes)
     return (void *)(bestp + 1);  // Devuelve el puntero a la zona de datos
 }
 
+void *xrealloc_v2(void * ptr, size_t size)
+{
+	//size contiene el número de bytes a reservar, osea no contiene la cabecera
+	//nuestro puntero sí incluye la cabecera
+	//Teniendo en cuenta que en la guia estaba el ejercicio de implementar el xrealloc,
+	//procederemos a implementarlo de manera similar a como la hemos implementado.
+	if(ptr==NULL)return NULL;
+	//printf("Llegue");
+	Header *p,*prevp,*new_ptr;
+	size_t nunits,nAligns;
+	nAligns = numSizeOfTypeInBlock(sizeof(Align));
+
+	//convertimos el número de bytes a número de bloques con cabecera incluida
+	nunits = (size+sizeof(Align)*nAligns-1)/(sizeof(Align)*nAligns) + 1;
+	
+	new_ptr = (Header *)ptr - 1;
+	// se quiere disminuir el tamaño del bloque
+
+
+	Header *bp;
+	bp = (Header *)ptr - 1; 
+	//encontramos el hueco siguiente y el anterior al proceso actual
+
+	p= freep;
+	if(!(bp > p && bp < p->s.ptr)|(p >= p->s.ptr && (bp > p || bp < p->s.ptr))){
+		p=p->s.ptr;
+	}
+
+	for (; !(bp > p && bp < p->s.ptr);prevp = p, p = p->s.ptr)
+		if (p >= p->s.ptr && (bp > p || bp < p->s.ptr))
+			break;
+
+	Header *next_block=p->s.ptr;
+
+	if(nunits +1 <= new_ptr->s.size){
+		//printf("Hola\n");
+		//printf("%d %d\n\n",nunits +1,new_ptr->s.size);
+		if(nunits+1==new_ptr->s.size&&new_ptr->s.ptr==new_ptr+new_ptr->s.size)return ptr;
+
+		
+		Header* new_hole;
+
+		new_hole = new_ptr+nunits;
+		new_hole->s.size=new_ptr->s.size-nunits;
+		new_hole->s.ptr=p->s.ptr;
+		p->s.ptr=new_hole;
+		
+		new_ptr->s.size=nunits;
+
+		xfree((void*)(new_hole));
+
+		return (void*)(new_ptr + 1);
+	}
+
+	//se va a aumentar el tamaño del bloque
+
+	
+	if(p->s.ptr==new_ptr+new_ptr->s.size &&new_ptr->s.size+next_block->s.size>nunits){
+		//si el hueco adyacente superior, más el bloque actual pueden satisfacer la solicitud
+		//de expansión de memoria
+		//posicionamos al puntero en el espacio que le corresponde al nuevo bloque
+		next_block+=nunits;
+		new_ptr->s.size=nunits;
+		//le disminuimos el tamaño al hueco y hacemos que apunte al siguiente 
+		//hueco del bloque hueco antes de disminuir en tamaño
+		next_block->s.size=p->s.ptr->s.size-(nunits-new_ptr->s.size);
+		next_block->s.ptr=p->s.ptr;
+		return (void*)(new_ptr + 1);
+		
+	}else if(p+p->s.size==new_ptr &&p->s.size+new_ptr->s.size>nunits){
+		//printf("Hola");
+		
+
+		//existe un hueco en la parte posterior y puede reubicarse ahí
+		size_t blockDiff = nunits - new_ptr->s.size;
+		Header *aux;
+		//guardamos el puntero a donde está la información
+
+		aux = new_ptr;
+		//nos movemos para abarcar el nuevo espacio y actualizamos el size del bloque
+		p->s.size-= blockDiff;
+		new_ptr-=blockDiff;
+		new_ptr->s.size=nunits;
+		memcpy(new_ptr,aux,aux->s.size*sizeof(Align));
+		//si el bloque alcanza exacto para el realloc, el puntero anterior al p
+		//debe apuntar al siguiente del p
+		if(p->s.size+new_ptr->s.size==nunits+1){
+			prevp->s.ptr=p->s.ptr;
+		}		
+		return (void*)(new_ptr + 1);
+	}else if(p->s.ptr==new_ptr+new_ptr->s.size&& p+p->s.size==new_ptr){
+		
+		//existen huecos adyacente por la derecha e izquierda
+
+		//validamos que tengan tamaño suficiente
+		if(p->s.size+next_block->s.size+new_ptr->s.size>=nunits+1){
+			size_t blockDiffBack=nunits-(next_block->s.size + new_ptr->s.size);
+			Header *aux;
+			aux = new_ptr;
+			//nos posicionamos en el nuevo lugar reservado
+			new_ptr-=blockDiffBack;
+
+			//copiamos toda la información 
+			memcpy(new_ptr,aux,aux->s.size*sizeof(Align));
+
+			//actualizamos el size del bloque anterior
+			p->s.size-=blockDiffBack;
+			new_ptr->s.size=nunits;
+			//vemos cuando el hueco es exacto y cuando no lo es
+			if(p->s.size+next_block->s.size+new_ptr->s.size>nunits){
+				//los huecos juntos satisfacen más de la memoria pedida
+				p->s.ptr=next_block->s.ptr;
+			}else{
+				prevp->s.ptr=next_block->s.ptr;
+			}
+			
+			return (void*)(new_ptr + 1);
+		}
+	}
+
+	//no se puedo reubicar en la parte posterior/superior
+
+	Header *aux;
+	aux = new_ptr;
+	new_ptr=(Header*)xmalloc(nunits*sizeof(Align));
+	memset(new_ptr,0,nunits*sizeof(Align));
+	if(new_ptr)memcpy(new_ptr,aux,aux->s.size*sizeof(Align));
+	
+	return (void*)(new_ptr + 1);
+}
+
 
 /*El algoritmo Worst-Fit selecciona el bloque más grande disponible para intentar dejar un espacio 
 grande para futuras asignaciones. Esto puede causar más fragmentación a largo plazo, pero a veces es 
